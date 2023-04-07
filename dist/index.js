@@ -25,12 +25,14 @@ function axiosCordovaAdapter(config) {
             let headers = Object.assign(config.auth ? cordova.plugin.http.getBasicAuthHeader(config.auth.username, config.auth.password) : {}, config.headers);
             if (config.data instanceof URLSearchParams) {
                 serializer = 'utf8';
-                headers['content-type'] = 'application/x-www-form-urlencoded';
                 data = config.data.toString();
+                headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                headers['Content-Length'] = data.length;
             }
             else if (config.data instanceof Uint8Array || config.data instanceof ArrayBuffer) {
                 serializer = 'raw';
                 data = config.data;
+                headers['Content-Length'] = config.data.byteLength;
             }
             else if (config.data instanceof FormData) {
                 serializer = 'multipart';
@@ -39,10 +41,13 @@ function axiosCordovaAdapter(config) {
             else if (config.data && typeof config.data === 'object') {
                 serializer = 'json';
                 data = config.data;
+                headers['Content-Length'] = JSON.stringify(data).length;
             }
             else {
                 serializer = 'utf8';
                 data = config.data ? String(config.data) : '';
+                if (data)
+                    headers['Content-Length'] = data.length;
             }
             let responseType = '';
             switch (config.responseType) {
@@ -108,7 +113,6 @@ function axiosCordovaAdapter(config) {
                             controller.enqueue(this.text);
                             controller.close();
                         }
-                        ;
                     })(response.data));
                     break;
             }
