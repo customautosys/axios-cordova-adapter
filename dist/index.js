@@ -61,6 +61,7 @@ function axiosCordovaAdapter(config) {
                 responseType,
                 followRedirect: typeof config.maxRedirects !== 'number' || config.maxRedirects > 0
             };
+            console.log(options, config.maxRedirects);
             switch (options.method) {
                 case 'post':
                 case 'put':
