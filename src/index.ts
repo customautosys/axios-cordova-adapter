@@ -88,7 +88,6 @@ export default function axiosCordovaAdapter(
 				}
 			}
 			if(Object.keys(headers).length>0)options.headers=headers;
-			console.log(url,options);
 			let response=await new Promise<any>(resolve=>cordova.plugin.http.sendRequest(
 				url,
 				options,

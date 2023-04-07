@@ -94,7 +94,6 @@ function axiosCordovaAdapter(config) {
             }
             if (Object.keys(headers).length > 0)
                 options.headers = headers;
-            console.log(url, options);
             let response = yield new Promise(resolve => cordova.plugin.http.sendRequest(url, options, (response) => resolve(response), (response) => resolve(response)));
             switch (config.responseType) {
                 case 'document':
