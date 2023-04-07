@@ -33,14 +33,12 @@ export default function axiosCordovaAdapter(
 			}else if(config.data instanceof FormData){
 				serializer='multipart';
 				data=config.data;
-			}else if(config.data){
-				if(typeof config.data==='object'){
-					serializer='json';
-					data=config.data;
-				}else{
-					serializer='utf8';
-					data=config.data.toString();
-				}
+			}else if(config.data&&typeof config.data==='object'){
+				serializer='json';
+				data=config.data;
+			}else{
+				serializer='utf8';
+				data=config.data?String(config.data):'';
 			}
 			let responseType='';
 			switch(config.responseType){
@@ -63,8 +61,8 @@ export default function axiosCordovaAdapter(
 				case 'post':
 				case 'put':
 				case 'patch':
-					if(data)options.data=data;
-					if(serializer)options.serializer=serializer;
+					options.data=data;
+					options.serializer=serializer;
 					break;
 				case 'get':
 				case 'head':
@@ -84,6 +82,7 @@ export default function axiosCordovaAdapter(
 				}
 			}
 			if(Object.keys(headers).length>0)options.headers=headers;
+			console.log(options);
 			let response=await new Promise<any>(resolve=>cordova.plugin.http.sendRequest(
 				url,
 				options,
