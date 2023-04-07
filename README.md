@@ -13,8 +13,9 @@ Removal of this Copyright Notice is prohibited.
 ## Installation
 
 ```bash
-npm i -D axios-cordova-adapter
-npm i -S axios-cordova-adapter
+cordova plugin add cordova-plugin-advanced-http
+[ npm i -D axios | npm i -S axios ]
+[ npm i -D axios-cordova-adapter | npm i -S axios-cordova-adapter ]
 ```
 
 ## Importing
