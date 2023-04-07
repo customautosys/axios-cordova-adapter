@@ -22,7 +22,6 @@ function axiosCordovaAdapter(config) {
             let url = (0, buildURL_1.default)((0, buildFullPath_1.default)(config.baseURL, config.url), config.params, config.paramsSerializer);
             let serializer = '';
             let headers = Object.assign(config.auth ? cordova.plugin.http.getBasicAuthHeader(config.auth.username, config.auth.password) : {}, config.headers);
-            console.log(config.data);
             if (config.data instanceof URLSearchParams) {
                 serializer = 'utf8';
                 headers['content-type'] = 'application/x-www-form-urlencoded';
@@ -67,8 +66,10 @@ function axiosCordovaAdapter(config) {
                 case 'post':
                 case 'put':
                 case 'patch':
-                    options.data = data;
-                    options.serializer = serializer;
+                    if (data)
+                        options.data = data;
+                    if (serializer)
+                        options.serializer = serializer;
                     break;
                 case 'get':
                 case 'head':
