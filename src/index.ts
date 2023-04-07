@@ -6,6 +6,7 @@ import type{
 import settle from 'axios/lib/core/settle';
 import buildURL from 'axios/lib/helpers/buildURL';
 import buildFullPath from 'axios/lib/core/buildFullPath';
+import {getReasonPhrase} from 'http-status-codes';
 
 export default function axiosCordovaAdapter(
 	config:InternalAxiosRequestConfig
@@ -107,6 +108,8 @@ export default function axiosCordovaAdapter(
 					})(response.data));
 					break;
 			}
+			response.config=config;
+			response.statusText=getReasonPhrase(response.status);
 			(Object.prototype.toString.call((config as any).settle)==='[object Function]'
 				?(config as any).settle
 				:settle

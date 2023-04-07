@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const settle_1 = __importDefault(require("axios/lib/core/settle"));
 const buildURL_1 = __importDefault(require("axios/lib/helpers/buildURL"));
 const buildFullPath_1 = __importDefault(require("axios/lib/core/buildFullPath"));
+const http_status_codes_1 = require("http-status-codes");
 function axiosCordovaAdapter(config) {
     return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
         try {
@@ -111,6 +112,8 @@ function axiosCordovaAdapter(config) {
                     })(response.data));
                     break;
             }
+            response.config = config;
+            response.statusText = (0, http_status_codes_1.getReasonPhrase)(response.status);
             (Object.prototype.toString.call(config.settle) === '[object Function]'
                 ? config.settle
                 : settle_1.default)(resolve, reject, response);
