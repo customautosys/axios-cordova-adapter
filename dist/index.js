@@ -27,12 +27,12 @@ function axiosCordovaAdapter(config) {
                 serializer = 'utf8';
                 data = config.data.toString();
                 headers['Content-Type'] = 'application/x-www-form-urlencoded';
-                headers['Content-Length'] = data.length;
+                headers['Content-Length'] = data.length.toString();
             }
             else if (config.data instanceof Uint8Array || config.data instanceof ArrayBuffer) {
                 serializer = 'raw';
                 data = config.data;
-                headers['Content-Length'] = config.data.byteLength;
+                headers['Content-Length'] = config.data.byteLength.toString();
             }
             else if (config.data instanceof FormData) {
                 serializer = 'multipart';
@@ -41,13 +41,13 @@ function axiosCordovaAdapter(config) {
             else if (config.data && typeof config.data === 'object') {
                 serializer = 'json';
                 data = config.data;
-                headers['Content-Length'] = JSON.stringify(data).length;
+                headers['Content-Length'] = JSON.stringify(data).length.toString();
             }
             else {
                 serializer = 'utf8';
                 data = config.data ? String(config.data) : '';
                 if (data)
-                    headers['Content-Length'] = data.length;
+                    headers['Content-Length'] = data.length.toString();
             }
             let responseType = '';
             switch (config.responseType) {
