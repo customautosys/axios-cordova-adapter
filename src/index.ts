@@ -118,7 +118,11 @@ export default function axiosCordovaAdapter(
 					break;
 			}
 			response.config=config;
-			response.statusText=getReasonPhrase(response.status);
+			try{
+				response.statusText=getReasonPhrase(response.status);
+			}catch(error){
+				console.log(error);
+			}
 			(Object.prototype.toString.call((config as any).settle)==='[object Function]'
 				?(config as any).settle
 				:settle

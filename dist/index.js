@@ -117,7 +117,12 @@ function axiosCordovaAdapter(config) {
                     break;
             }
             response.config = config;
-            response.statusText = (0, http_status_codes_1.getReasonPhrase)(response.status);
+            try {
+                response.statusText = (0, http_status_codes_1.getReasonPhrase)(response.status);
+            }
+            catch (error) {
+                console.log(error);
+            }
             (Object.prototype.toString.call(config.settle) === '[object Function]'
                 ? config.settle
                 : settle_1.default)(resolve, reject, response);
