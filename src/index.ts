@@ -22,7 +22,7 @@ export default function axiosCordovaAdapter(
 				config.paramsSerializer
 			);
 			let serializer='';
-			let headers=config.headers&&typeof config.headers==='object'?config.headers:{};
+			let headers=Object.assign(config.auth?cordova.plugin.http.getBasicAuthHeader(config.auth.username,config.auth.password):{},config.headers);
 			if(config.data instanceof URLSearchParams){
 				serializer='utf8';
 				headers['content-type']='application/x-www-form-urlencoded';
