@@ -56,7 +56,7 @@ export default function axiosCordovaAdapter(
 			let options:any={
 				method:config.method.toLowerCase(),
 				responseType,
-				followRedirect:config.maxRedirects>0
+				followRedirect:typeof config.maxRedirects!=='number'||config.maxRedirects>0
 			};
 			switch(options.method){
 				case 'post':
@@ -83,7 +83,6 @@ export default function axiosCordovaAdapter(
 				}
 			}
 			if(Object.keys(headers).length>0)options.headers=headers;
-			console.log(options);
 			let response=await new Promise<any>(resolve=>cordova.plugin.http.sendRequest(
 				url,
 				options,

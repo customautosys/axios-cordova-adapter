@@ -59,7 +59,7 @@ function axiosCordovaAdapter(config) {
             let options = {
                 method: config.method.toLowerCase(),
                 responseType,
-                followRedirect: config.maxRedirects > 0
+                followRedirect: typeof config.maxRedirects !== 'number' || config.maxRedirects > 0
             };
             switch (options.method) {
                 case 'post':
@@ -88,7 +88,6 @@ function axiosCordovaAdapter(config) {
             }
             if (Object.keys(headers).length > 0)
                 options.headers = headers;
-            console.log(options);
             let response = yield new Promise(resolve => cordova.plugin.http.sendRequest(url, options, (response) => resolve(response), (response) => resolve(response)));
             switch (config.responseType) {
                 case 'document':
