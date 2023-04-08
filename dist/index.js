@@ -98,22 +98,24 @@ function axiosCordovaAdapter(config) {
             switch (config.responseType) {
                 case 'document':
                     try {
-                        response.data = new DOMParser().parseFromString(response.data, response.data.startsWith('<?xml') ? 'text/xml' : 'text/html');
+                        if (response.data)
+                            response.data = new DOMParser().parseFromString(response.data, response.data.startsWith('<?xml') ? 'text/xml' : 'text/html');
                     }
                     catch (error) {
                         console.log(error);
                     }
                     break;
                 case 'stream':
-                    response.data = new ReadableStream(new (class {
-                        constructor(text) {
-                            this.text = text;
-                        }
-                        start(controller) {
-                            controller.enqueue(this.text);
-                            controller.close();
-                        }
-                    })(response.data));
+                    if (response.data)
+                        response.data = new ReadableStream(new (class {
+                            constructor(text) {
+                                this.text = text;
+                            }
+                            start(controller) {
+                                controller.enqueue(this.text);
+                                controller.close();
+                            }
+                        })(response.data));
                     break;
             }
             response.config = config;

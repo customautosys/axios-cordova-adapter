@@ -97,7 +97,7 @@ export default function axiosCordovaAdapter(
 			switch(config.responseType){
 				case 'document':
 					try{
-						response.data=new DOMParser().parseFromString(
+						if(response.data)response.data=new DOMParser().parseFromString(
 							response.data,
 							response.data.startsWith('<?xml')?'text/xml':'text/html'
 						);
@@ -106,7 +106,7 @@ export default function axiosCordovaAdapter(
 					}
 					break;
 				case 'stream':
-					response.data=new ReadableStream(new(
+					if(response.data)response.data=new ReadableStream(new(
 						class implements UnderlyingDefaultSource{
 							constructor(public text:string){}
 							start(controller:ReadableStreamDefaultController<any>){
