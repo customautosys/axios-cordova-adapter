@@ -23,7 +23,7 @@ export default function axiosCordovaAdapter(
 				config.paramsSerializer
 			);
 			let serializer='';
-			let headers=Object.assign(config.auth?cordova.plugin.http.getBasicAuthHeader(config.auth.username,config.auth.password):{},config.headers);
+			let headers=Object.assign(config.auth?cordova.plugin.http.getBasicAuthHeader(config.auth.username,config.auth.password):{},config.headers.toJSON(true));
 			if(config.data instanceof URLSearchParams){
 				serializer='utf8';
 				data=config.data.toString();
@@ -123,6 +123,7 @@ export default function axiosCordovaAdapter(
 			}catch(error){
 				console.log(error);
 			}
+			let a:AxiosResponse;
 			(Object.prototype.toString.call((config as any).settle)==='[object Function]'
 				?(config as any).settle
 				:settle
