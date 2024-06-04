@@ -1,4 +1,4 @@
 declare var cordova:any;
-declare module 'axios/lib/core/settle';
-declare module 'axios/lib/helpers/buildURL';
-declare module 'axios/lib/core/buildFullPath';
+declare module 'axios/unsafe/core/settle.js';
+declare module 'axios/unsafe/helpers/buildURL.js';
+declare module 'axios/unsafe/core/buildFullPath.js';

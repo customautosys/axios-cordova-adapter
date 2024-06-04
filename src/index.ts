@@ -3,9 +3,9 @@ import type{
 	AxiosPromise,
 	AxiosResponse
 }from 'axios';
-import settle from 'axios/lib/core/settle';
-import buildURL from 'axios/lib/helpers/buildURL';
-import buildFullPath from 'axios/lib/core/buildFullPath';
+import settle from 'axios/unsafe/core/settle.js';
+import buildURL from 'axios/unsafe/helpers/buildURL.js';
+import buildFullPath from 'axios/unsafe/core/buildFullPath.js';
 import {getReasonPhrase} from 'http-status-codes';
 
 export default function axiosCordovaAdapter(
