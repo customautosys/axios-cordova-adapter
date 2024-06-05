@@ -26,7 +26,7 @@ function axiosCordovaAdapter(config) {
             if (config.data instanceof URLSearchParams) {
                 serializer = 'utf8';
                 data = config.data.toString();
-                headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
                 headers['Content-Length'] = data.length.toString();
             }
             else if (config.data instanceof Uint8Array || config.data instanceof ArrayBuffer) {
