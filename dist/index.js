@@ -95,6 +95,13 @@ function axiosCordovaAdapter(config) {
             if (Object.keys(headers).length > 0)
                 options.headers = headers;
             let response = yield new Promise(resolve => cordova.plugin.http.sendRequest(url, options, (response) => resolve(response), (response) => resolve(response)));
+            let locationCaseSensitive = '';
+            for (let i in response.headers) {
+                if (i.toLowerCase() === 'location')
+                    locationCaseSensitive = i;
+            }
+            if (response.status === -1 && locationCaseSensitive && response.headers[locationCaseSensitive])
+                response.status = 302;
             switch (config.responseType) {
                 case 'document':
                     try {

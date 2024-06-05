@@ -94,6 +94,11 @@ export default function axiosCordovaAdapter(
 				(response:any)=>resolve(response),
 				(response:any)=>resolve(response)
 			));
+			let locationCaseSensitive='';
+			for(let i in response.headers){
+				if(i.toLowerCase()==='location')locationCaseSensitive=i;
+			}
+			if(response.status===-1&&locationCaseSensitive&&response.headers[locationCaseSensitive])response.status=302;
 			switch(config.responseType){
 				case 'document':
 					try{
