@@ -12,18 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const settle_1 = __importDefault(require("axios/lib/core/settle"));
-const buildURL_1 = __importDefault(require("axios/lib/helpers/buildURL"));
-const buildFullPath_1 = __importDefault(require("axios/lib/core/buildFullPath"));
+const settle_js_1 = __importDefault(require("axios/unsafe/core/settle.js"));
+const buildURL_js_1 = __importDefault(require("axios/unsafe/helpers/buildURL.js"));
+const buildFullPath_js_1 = __importDefault(require("axios/unsafe/core/buildFullPath.js"));
 const http_status_codes_1 = require("http-status-codes");
 function axiosCordovaAdapter(config) {
     return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
         try {
             let data;
-            let url = (0, buildURL_1.default)((0, buildFullPath_1.default)(config.baseURL, config.url), config.params, config.paramsSerializer);
+            let url = (0, buildURL_js_1.default)((0, buildFullPath_js_1.default)(config.baseURL, config.url), config.params, config.paramsSerializer);
             let serializer = '';
-            let headers = Object.assign(config.auth ? cordova.plugin.http.getBasicAuthHeader(config.auth.username, config.auth.password) : {}, config.headers);
-            headers['Host'] = new URL(url).hostname;
+            let headers = Object.assign(config.auth ? cordova.plugin.http.getBasicAuthHeader(config.auth.username, config.auth.password) : {}, config.headers.toJSON(true));
             if (config.data instanceof URLSearchParams) {
                 serializer = 'utf8';
                 data = config.data.toString();
@@ -126,9 +125,10 @@ function axiosCordovaAdapter(config) {
             catch (error) {
                 console.log(error);
             }
+            let a;
             (Object.prototype.toString.call(config.settle) === '[object Function]'
                 ? config.settle
-                : settle_1.default)(resolve, reject, response);
+                : settle_js_1.default)(resolve, reject, response);
         }
         catch (error) {
             reject(error);
