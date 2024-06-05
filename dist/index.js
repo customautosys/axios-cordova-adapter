@@ -23,10 +23,11 @@ function axiosCordovaAdapter(config) {
             let url = (0, buildURL_1.default)((0, buildFullPath_1.default)(config.baseURL, config.url), config.params, config.paramsSerializer);
             let serializer = '';
             let headers = Object.assign(config.auth ? cordova.plugin.http.getBasicAuthHeader(config.auth.username, config.auth.password) : {}, config.headers);
+            headers['Host'] = new URL(url).hostname;
             if (config.data instanceof URLSearchParams) {
                 serializer = 'utf8';
                 data = config.data.toString();
-                headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
                 headers['Content-Length'] = data.length.toString();
             }
             else if (config.data instanceof Uint8Array || config.data instanceof ArrayBuffer) {

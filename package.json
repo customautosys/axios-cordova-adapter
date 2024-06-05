@@ -1,6 +1,6 @@
 {
 	"name": "axios-cordova-adapter",
-	"version": "1.0.16",
+	"version": "1.0.17",
 	"description": "An axios adapter using cordova-plugin-advanced-http",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
